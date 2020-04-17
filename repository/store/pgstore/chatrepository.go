@@ -2,6 +2,7 @@ package pgstore
 
 import (
 	"context"
+	"errors"
 	"github.com/dvasyanin/http-rest-api/models"
 )
 
@@ -40,6 +41,10 @@ func (r *ChatRepository) FindByRespond(id int64) ([]*models.Chat, error) {
 		}
 
 		chat = append(chat, &ch)
+	}
+
+	if len(chat) == 0 {
+		return nil, errors.New("chat not found")
 	}
 
 	return chat, nil

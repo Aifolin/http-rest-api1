@@ -23,9 +23,6 @@ func NewService(store *pgstore.Postgres) Service {
 }
 
 func (s *service) GetChatByRespond(id int64) ([]*models.Chat, error) {
-	s.store.Connect("")
-	defer s.store.Close()
-
 	chat, err := s.store.Chat().FindByRespond(id)
 	if err != nil {
 		return nil, err

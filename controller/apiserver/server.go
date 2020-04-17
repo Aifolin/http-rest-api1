@@ -15,11 +15,11 @@ func newServer(service service.Service) *server {
 // error response...
 func (s *server) error(er string) err {
 	return err{
-		error: er,
+		Error: er,
 	}
 }
 
-// err...
+// errResponse...
 type err struct {
-	error string
+	Error string `json:"error"`
 }
