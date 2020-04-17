@@ -2,7 +2,7 @@ package service
 
 import (
 	"github.com/dvasyanin/http-rest-api/models"
-	"github.com/dvasyanin/http-rest-api/repository/store/pgstore"
+	"github.com/dvasyanin/http-rest-api/repository/store"
 )
 
 type Service interface {
@@ -13,10 +13,10 @@ type Service interface {
 }
 
 type service struct {
-	store *pgstore.Postgres
+	store store.Store
 }
 
-func NewService(store *pgstore.Postgres) Service {
+func NewService(store store.Store) Service {
 	return &service{
 		store: store,
 	}
