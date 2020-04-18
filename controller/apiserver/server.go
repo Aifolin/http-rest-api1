@@ -7,6 +7,7 @@ import (
 
 const (
 	HeaderAuthorization = "Authorization"
+	HeaderRequestID     = "x-request-id"
 	ParamsRespond       = "respond"
 )
 

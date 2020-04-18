@@ -16,6 +16,7 @@ require (
 	github.com/ory/dockertest/v3 v3.6.0
 	github.com/pkg/errors v0.9.1 // indirect
 	github.com/sirupsen/logrus v1.5.0
+	github.com/stretchr/testify v1.5.1
 	github.com/subosito/gotenv v1.2.0
 	github.com/zhs/loggr v0.0.3
 	go.uber.org/zap v1.14.1

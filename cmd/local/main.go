@@ -1,43 +1,43 @@
-package apiserver
+package main
 
 import (
 	"context"
+	"fmt"
 	"github.com/dvasyanin/http-rest-api/config"
+	"github.com/dvasyanin/http-rest-api/models"
 	"github.com/dvasyanin/http-rest-api/repository/store/pgstore"
 	"github.com/dvasyanin/http-rest-api/service"
-	"github.com/gofiber/fiber"
 	"github.com/jackc/pgx/v4"
 	"log"
 )
 
-// Start service api rest
-func Start(cfg *config.Config) error {
-	// connect to db
+func main() {
+	cfg := config.NewConfig()
+	if cfg == nil {
+		log.Fatal()
+	}
+
+	chat := &models.Chat{
+		Message:   "Пидарас что ли?",
+		RespondID: 1,
+		ClientID:  1,
+	}
+
 	db, err := newDB(cfg.DatabaseURL())
 	if err != nil {
-		return err
+		log.Fatal(err)
 	}
 	defer db.Close(context.Background())
 
 	// create server
 	store := pgstore.New(db)
 	src := service.NewService(store)
-	srv := newServer(cfg.Context(), src)
-	app := fiber.New()
 
-	// chat methods ...
-	app.Get("/chat/getByRespond", srv.getChatByRespond())
-	app.Post("/chat/create", srv.createMessage())
-
-	// clients methods ...
-	// ...
-
-	// run server
-	if err := app.Listen(cfg.AppPort()); err != nil {
-		log.Fatal("can't run rest server")
+	if err := src.Create(chat); err != nil {
+		log.Fatal(err)
 	}
 
-	return nil
+	fmt.Println("Success")
 }
 
 func newDB(databaseURL string) (*pgx.Conn, error) {

@@ -73,5 +73,5 @@ func (c *Config) Context() context.Context {
 		return c.ctx
 	}
 
-	return nil
+	return context.Background()
 }

@@ -3,12 +3,15 @@ package store
 import "github.com/dvasyanin/http-rest-api/models"
 
 type ChatRepository interface {
-	FindByRespond(respondID int64) ([]*models.Chat, error)
+	Create(*models.Chat) error
+	FindByRespond(int64) ([]*models.ChatByRespond, error)
 }
 
 type ClientsRepository interface {
-	Create()
-	FindByEmail()
+	Create(*models.Employers) error
+	Delete(string) error
+	Updated(*models.Employers) error
+	FindByEmail(string) (*models.Employers, error)
 }
 
 type ResumeRepository interface {

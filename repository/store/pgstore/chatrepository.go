@@ -2,6 +2,7 @@ package pgstore
 
 import (
 	"context"
+	"database/sql"
 	"errors"
 	"github.com/dvasyanin/http-rest-api/models"
 )
@@ -10,9 +11,20 @@ type ChatRepository struct {
 	store *Postgres
 }
 
+// Create message
+func (r *ChatRepository) Create(chat *models.Chat) error {
+	query := `insert into chat 
+				(message, id_respond, id_client) 
+				VALUES ($1, $2, $3) returning id_message`
+
+	return r.store.conn.QueryRow(context.Background(), query,
+		chat.Message, chat.RespondID, chat.ClientID,
+	).Scan(&chat.MessageID)
+}
+
 // Get chat as part of the response
-func (r *ChatRepository) FindByRespond(id int64) ([]*models.Chat, error) {
-	var chat []*models.Chat
+func (r *ChatRepository) FindByRespond(id int64) ([]*models.ChatByRespond, error) {
+	var chat []*models.ChatByRespond
 
 	query := `
 		select c2.message,
@@ -33,14 +45,20 @@ func (r *ChatRepository) FindByRespond(id int64) ([]*models.Chat, error) {
 		return nil, err
 	}
 
+	var msg, name sql.NullString
+	var created sql.NullTime
+
 	for row.Next() {
-		var ch models.Chat
-		err := row.Scan(&ch)
+		err := row.Scan(&msg, &created, &name)
 		if err != nil {
 			return nil, err
 		}
 
-		chat = append(chat, &ch)
+		chat = append(chat, &models.ChatByRespond{
+			Message: msg.String,
+			Created: created.Time,
+			Name:    name.String,
+		})
 	}
 
 	if len(chat) == 0 {
