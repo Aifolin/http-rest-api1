@@ -3,7 +3,7 @@ package store
 import "github.com/dvasyanin/http-rest-api/models"
 
 type ChatRepository interface {
-	FindByRespond(idRespond int64) ([]*models.Chat, error)
+	FindByRespond(respondID int64) ([]*models.Chat, error)
 }
 
 type ClientsRepository interface {

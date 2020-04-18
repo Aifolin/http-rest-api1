@@ -1,13 +1,23 @@
 package apiserver
 
-import "github.com/dvasyanin/http-rest-api/service"
+import (
+	"context"
+	"github.com/dvasyanin/http-rest-api/service"
+)
+
+const (
+	HeaderAuthorization = "Authorization"
+	ParamsRespond       = "respond"
+)
 
 type server struct {
+	ctx     context.Context
 	service service.Service
 }
 
-func newServer(service service.Service) *server {
+func newServer(ctx context.Context, service service.Service) *server {
 	return &server{
+		ctx:     ctx,
 		service: service,
 	}
 }
