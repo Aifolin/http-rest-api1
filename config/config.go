@@ -1,13 +1,16 @@
 package config
 
 import (
+	"context"
 	"github.com/subosito/gotenv"
+	"github.com/zhs/loggr"
 	"os"
 )
 
 type Config struct {
 	app *app
 	db  *db
+	ctx context.Context
 }
 
 type app struct {
@@ -22,6 +25,9 @@ type db struct {
 // New config...
 func NewConfig() *Config {
 	_ = gotenv.Load(".env")
+	logger := loggr.New("@version", os.Getenv("APP_VERSION"))
+	ctx := loggr.ToContext(context.TODO(), logger)
+
 	return &Config{
 		db: &db{
 			databaseURL: os.Getenv("DATABASE_URL"),
@@ -30,6 +36,7 @@ func NewConfig() *Config {
 			port:    os.Getenv("APP_PORT"),
 			version: os.Getenv("APP_VERSION"),
 		},
+		ctx: ctx,
 	}
 }
 
@@ -58,4 +65,13 @@ func (c *Config) AppVersion() string {
 	}
 
 	return ""
+}
+
+// Context ...
+func (c *Config) Context() context.Context {
+	if c != nil {
+		return c.ctx
+	}
+
+	return nil
 }

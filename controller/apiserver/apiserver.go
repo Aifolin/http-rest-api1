@@ -7,7 +7,6 @@ import (
 	"github.com/dvasyanin/http-rest-api/service"
 	"github.com/gofiber/fiber"
 	"github.com/jackc/pgx/v4"
-	"github.com/zhs/loggr"
 	"log"
 )
 
@@ -22,10 +21,7 @@ func Start(cfg *config.Config) error {
 	store := pgstore.New(db)
 	src := service.NewService(store)
 
-	logger := loggr.New("@version", cfg.AppVersion())
-	ctx := loggr.ToContext(context.TODO(), logger)
-
-	srv := newServer(ctx, src)
+	srv := newServer(cfg.Context(), src)
 
 	app := fiber.New()
 	app.Get("/chat", srv.getChatByRespond())
