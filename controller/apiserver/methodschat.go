@@ -67,7 +67,7 @@ func (s *server) createMessage() func(*fiber.Ctx) {
 			return
 		}
 
-		if err := s.service.Create(&body); err != nil {
+		if err := s.service.CreateMessage(&body); err != nil {
 			c.Status(http.StatusInternalServerError)
 			_ = c.JSON(s.error(err.Error()))
 			log.Errorw("[response]", "response", err)

@@ -7,13 +7,13 @@ import (
 	"testing"
 )
 
-func TestEmployersRepository_Created(t *testing.T) {
+func TestClientRepository_CreateEmployers(t *testing.T) {
 	db, teardown := pgstore.TestDb(t, databaseURL)
 	defer teardown("clients", "employers")
 
 	s := pgstore.New(db)
 	e := models.TestEmployer(t)
 
-	assert.NoError(t, s.Client().Create(e))
+	assert.NoError(t, s.Client().CreateEmployer(e))
 	assert.NotZero(t, e.ID)
 }

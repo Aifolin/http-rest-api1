@@ -8,10 +8,10 @@ type ChatRepository interface {
 }
 
 type ClientsRepository interface {
-	Create(*models.Employers) error
-	Delete(string) error
-	Updated(*models.Employers) error
-	FindByEmail(string) (*models.Employers, error)
+	CreateEmployer(*models.Employers) error
+	DeleteEmployer(string) error
+	EmployerFindByEmail(*models.Employers) error
+	UpsertEmployer(*models.Employers) error
 }
 
 type ResumeRepository interface {

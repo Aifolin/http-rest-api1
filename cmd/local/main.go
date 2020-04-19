@@ -33,7 +33,7 @@ func main() {
 	store := pgstore.New(db)
 	src := service.NewService(store)
 
-	if err := src.Create(chat); err != nil {
+	if err := src.CreateMessage(chat); err != nil {
 		log.Fatal(err)
 	}
 

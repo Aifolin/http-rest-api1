@@ -9,8 +9,8 @@ type ClientRepository struct {
 	store *Postgres
 }
 
-// Create client
-func (r *ClientRepository) Create(e *models.Employers) error {
+// CreateMessage client
+func (r *ClientRepository) CreateEmployer(e *models.Employers) error {
 	query := `
 		with 
 			ins1 as (
@@ -28,20 +28,20 @@ func (r *ClientRepository) Create(e *models.Employers) error {
 	).Scan(&e.ID)
 }
 
-// Delete client
-func (r *ClientRepository) Delete(string) error {
+// Delete employer
+func (r *ClientRepository) DeleteEmployer(string) error {
 
 	return nil
 }
 
-// Update client
-func (r ClientRepository) Updated(*models.Employers) error {
+// Employer find by email
+func (r *ClientRepository) EmployerFindByEmail(*models.Employers) error {
 
 	return nil
 }
 
-// Employers find by email
-func (r *ClientRepository) FindByEmail(string) (*models.Employers, error) {
+// Upsert employer
+func (r *ClientRepository) UpsertEmployer(*models.Employers) error {
 
-	return nil, nil
+	return nil
 }

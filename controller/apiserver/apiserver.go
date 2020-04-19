@@ -26,10 +26,19 @@ func Start(cfg *config.Config) error {
 	app := fiber.New()
 
 	// chat methods ...
-	app.Get("/chat/getByRespond", srv.getChatByRespond())
 	app.Post("/chat/create", srv.createMessage())
+	app.Get("/chat/byRespond", srv.getChatByRespond())
 
 	// clients methods ...
+	app.Post("/employer/create", srv.createEmployers())
+	app.Get("/employer/findByEmail", srv.employerFindByEmail())
+	app.Put("/employer/put", srv.putEmployers())
+	app.Delete("/employer/delete", srv.deleteEmployer())
+
+	// resume methods
+	// ...
+
+	// vacancy methods
 	// ...
 
 	// run server

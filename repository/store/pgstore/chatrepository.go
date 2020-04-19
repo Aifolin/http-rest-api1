@@ -11,7 +11,7 @@ type ChatRepository struct {
 	store *Postgres
 }
 
-// Create message
+// CreateMessage message
 func (r *ChatRepository) Create(chat *models.Chat) error {
 	query := `insert into chat 
 				(message, id_respond, id_client) 

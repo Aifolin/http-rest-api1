@@ -23,6 +23,7 @@ func TestChatRepository_FindByRespond(t *testing.T) {
 	defer teardown("chat")
 
 	s := pgstore.New(db)
+
 	ch := models.TestChat(t)
 
 	chat, err := s.Chat().FindByRespond(ch.MessageID)
@@ -32,4 +33,7 @@ func TestChatRepository_FindByRespond(t *testing.T) {
 	err = s.Chat().Create(ch)
 	assert.NoError(t, err)
 	assert.NotNil(t, ch)
+	chat, err = s.Chat().FindByRespond(ch.RespondID)
+	assert.NoError(t, err)
+	assert.NotNil(t, chat)
 }
